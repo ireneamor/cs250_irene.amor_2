@@ -32,12 +32,37 @@ void FrameBuffer::Clear(unsigned char r, unsigned char g, unsigned char b)
 
 void FrameBuffer::SetPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b)
 {
-    // TODO
+    // Sanity check
+    if (imageData == nullptr || width <= x || height <= y)
+        return;
+
+    // advance to pixel
+    unsigned offset = 3 * (y * width + x); //3 = r,g,b
+
+    // set
+    imageData[offset] = r;
+    imageData[offset + 1] = g;
+    imageData[offset + 2] = b;
 }
 
 void FrameBuffer::GetPixel(int x, int y, unsigned char & r, unsigned char & g, unsigned char & b)
 {
-    // TODO
+    // Sanity check
+    if (imageData == nullptr || width <= x || height <= y)
+    {
+        r = 250;
+        g = 250;
+        b = 250;
+    }
+
+    // advance to pixel
+    unsigned startOffset = 3 * (y * width + x);
+
+    // Get the color component
+    r = imageData[startOffset];
+    g = imageData[startOffset + 1];
+    b = imageData[startOffset + 2];
+
 }
 
 // Convert the custom framebuffer to SFML format
