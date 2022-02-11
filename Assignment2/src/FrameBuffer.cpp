@@ -33,11 +33,11 @@ void FrameBuffer::Clear(unsigned char r, unsigned char g, unsigned char b)
 void FrameBuffer::SetPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b)
 {
     // Sanity check
-    if (imageData == nullptr || width <= x || height <= y)
+    if (imageData == nullptr || width <= x || x < 0 || height <= y || y < 0)
         return;
 
     // advance to pixel
-    unsigned offset = 3 * (y * width + x); //3 = r,g,b
+    unsigned offset = 3 * (y * width + x);
 
     // set
     imageData[offset] = r;
@@ -53,6 +53,8 @@ void FrameBuffer::GetPixel(int x, int y, unsigned char & r, unsigned char & g, u
         r = 250;
         g = 250;
         b = 250;
+
+        return;
     }
 
     // advance to pixel
